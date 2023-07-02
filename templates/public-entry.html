@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ entry.title }}
+{% endblock %}
+
+{% block content %}
+    <div class="completed-entry">
+        <div style="text-align: center; margin-bottom: 5em;">
+        <h3>{{ entry.title }}</h3>
+        <em>{{entry['last_update']|timestamp_to_local_time }}</em>
+        </div>
+        <div style="margin-top: 5em;">
+        {% for chat in entry.chats[2:] %}
+        <p style="{% if chat['role']=='assistant' %}font-style: italic;background-color: lightgray;{% endif %}">
+            {{ chat.content }}
+        </p>
+        {% endfor %}
+        </div>
+    </div>
+<div>
+
+ 
+      {% for comment in comments %}
+      <div class="'comment">
+              <p><strong>{{ comment.user_id }}</strong> {{ comment.content }}</p>
+              <span class="fa-solid fa-thumbs-up"  style="color: #707a89;"  onclick="window.location.href='/like_comment/{{ comment._id }}'"></span>  <span>{{ comment.likes }}</span>
+              <span class="timestamp" data-timestamp="{{ comment.last_update }}">{{ comment.last_update }}</span>
+            </p> 
+              <hr class="faint-line">
+            </div>
+      {% endfor %}
+
+
+  <hr>
+
+  <form action="/add_comment" method="POST">
+      <input type="hidden" name="entry_id" value="{{ entry._id }}">
+      <textarea name="content" id="message" placeholder="What are your thoughts?" required></textarea><br>
+      <input type="submit" value="Submit">
+  </form>
+
+    <script src="{{ url_for('static', filename='public_entry.js') }}"></script>
+    <script src="{{ url_for('static', filename='public_entries.js') }}"></script>
+ 
+{% endblock %}

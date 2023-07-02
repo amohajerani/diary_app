@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}
+    Admin
+{% endblock %}
+
+{% block content %}
+<div>
+    <h4>Entries</h4>
+    <ul>
+      {% for entry in entries %}
+      
+        <p><strong><a href="/admin/{{entry['_id']}}">{{entry['title']}}</a></strong><span class="timestamp" data-timestamp="{{ entry.last_update }}">{{ entry.last_update }}</span></p>
+        <p>user ID: {{entry['user_id']}}</p>
+        <p>{{entry['excerpt']}}</p>
+        <hr class="faint-line">
+      {% endfor %}
+    </ul> 
+</div>
+<script src="{{ url_for('static', filename='public_entries.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}
+    {{ entry.title }}
+{% endblock %}
+
+{% block content %}
+<div id="button-container" style="text-align: right;">
+    <h3 onclick="shareViaEmail('{{ entry._id }}')" style="display: inline-block">&#x1F4E7;</h3>
+    <h3 onclick="downloadAsPDF()" style="display: inline-block">&#x1F5A8;</h3>
+    
+</div>
+    <div class="completed-entry">
+        <div style="text-align: center; margin-bottom: 5em;">
+        <h3>{{ entry.title }}</h3>
+        <em>{{entry['last_update']|timestamp_to_local_time }}</em>
+        </div>
+        <h6><strong>Insights</strong></h6>
+        <p>{{entry.insights}}</p>
+        <h6><strong>Action</strong></h6>
+        <ul>
+            {% for action in entry.actions %}
+                <li>{{ action }}</li>
+            {% endfor %}
+        </ul>
+        <div style="margin-top: 5em;">
+        <h6><strong>Entry</strong></h6>
+        {% for chat in entry.chats[2:] %}
+        <p style="{% if chat['role']=='assistant' %}font-style: italic;background-color: lightgray;{% endif %}">
+            {{ chat.content }}
+        </p>
+        {% endfor %}
+        </div>
+    </div>
+</div>
+</div>
+    <div style="text-align: center;">
+        <button class="btn btn-primary" onclick="change_to_in_progress('{{ entry._id }}')">Keep writing</button>
+    </div> 
+
+    <script src="{{ url_for('static', filename='journal_entry.js') }}"></script>
+{% endblock %}

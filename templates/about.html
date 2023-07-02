@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}
+    About
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>About Us</h1>
+
+    <div class="content-wrapper">
+        <div class="text-wrapper">
+            <h2>The Team</h2>
+            <div class="image-wrapper">
+                <img src="/static/images/about.png" alt="About Us Image" class="about-image">
+            </div>
+            <p>
+                Introducing <a href="https://www.linkedin.com/in/amir-mohajerani-00848659/">Amir</a> and <a href="https://buckspsychiatry.org/">Dr. Wang</a>, a husband and wife team! Amir,software engineer, and Dr. Wang, a Harvard-trained psychiatrist and owner of a mental health clinic, have combined their passion to create  an interactive journal for self reflection.</p>
+                <p>Gagali leverages GPT, an advanced language model, to provide personalized prompts that engage writers based on the content of their entries. By employing self reflective listening techniques and drawing from cognitive behavioral therapy principles, Gagali helps individuals identify their feelings, thoughts and underlying beliefs. Gagali goes a step further by generating insights based on journal entries and challenging writers to explore different perspectives. 
+            
+            </p>
+    
+            <p>
+                We would love to hear from you! If you have any questions, feedback, or suggestions, please don't hesitate to reach out to us.
+            </p>
+            <p>
+                Email: gagali.help@gmail.com
+            </p>
+        </div>
+    
+
+    </div>
+</div>
+
+<style>
+    .content-wrapper {
+        display: flex;
+    }
+    
+    .text-wrapper {
+        flex: 1;
+    }
+    
+    .image-wrapper {
+        float: right;
+        max-width: 300px;
+        margin-left: 20px;
+    }
+    
+    .about-image {
+        width: 100%;
+        height: auto;
+    }
+</style>
+{% endblock %}

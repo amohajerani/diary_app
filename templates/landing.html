@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}Gagali{% endblock %}
+{% block content %}
+<style>
+    /* CSS for the container */
+    .landingcontainer {
+        display: flex;
+        flex-wrap: wrap;
+        width: 90%;
+        margin: 0 auto;
+    }
+
+    /* CSS for the left division */
+    .landing-left {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: left;
+        align-items: left;
+    }
+
+    /* CSS for the upper division */
+    .landing-upper {
+        text-align: center;
+        margin-bottom: 1em;
+        margin-right: 1em;
+    }
+
+    /* CSS for the right division */
+    .landing-right {
+        flex: 1;
+        align-items: center;
+    }
+
+    /* CSS for the lower division */
+    .landing-lower {
+        margin: 1em;
+    }
+
+
+
+
+    /* CSS for the image container */
+    .image-container {
+        text-align: center;
+        margin-top: 2em;
+    }
+
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .landingcontainer {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .landing-left,
+        .landing-right {
+            flex: auto;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .landing-upper {
+            margin-top: 2em;
+        }
+
+        .image-container {
+            margin-top: 1em;
+        }
+    }
+</style>
+
+
+
+<div class="landingcontainer">
+    <div class="landing-left" style="margin: 1em;">
+        <!-- Content for the right division -->
+        <h1 style="margin-top: 3em; margin-bottom: 1em;">Therapeutic chat</h1>
+
+
+        <a href="/login" style="margin-top:1em; "><button class="btn btn-primary"
+                style="background-color:rgb(25, 105, 255); border-radius: 1em; border-color: white;">
+                <h4>Start your journey</h4>
+            </button></a>
+
+
+    </div>
+
+    <div class="landing-right">
+
+            <img src="/static/images/gagali_wordcloud.png" style="max-width: 100%; margin: 1em; border-radius: 10%;">
+
+    </div>
+
+</div>
+
+
+<hr class="faint-line" style="margin-top: 10%">
+
+
+<div class="landingcontainer">
+    <div class="landing-left" style="margin: 1em;">
+        <!-- Content for the right division -->
+        <h2 style="margin-top: 3em; margin-bottom: 1em;">AI powered assistant for self reflection</h2>
+        <h4>Non-judgemental</h4>
+        <h4>Free</h4>
+        <h4>24/7</h4>
+
+    </div>
+
+    <div class="landing-right">
+            <!-- Content for the upper division -->
+            <img src="/static/images/landing_page_balance.png" style="max-width: 100%; margin: 1em; border-radius: 1%;">
+    </div>
+
+</div>
+<div>
+
+    <h3 style="text-align: center; padding: 20px; padding-bottom: 50px;">Why Gagali</h3>
+    <center>
+        <iframe style="justify-content: center; align-items: center; margin:auto" width="560" height="315"
+            src="https://www.youtube.com/embed/1e054vmQe1U" title="YouTube video player" frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen></iframe>
+</div>
+</center>
+</div>
+
+{% endblock %}

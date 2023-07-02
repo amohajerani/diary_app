@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block title %}
+Entry
+{% endblock %}
+
+{% block content %}
+<style>
+  #chat-box {
+    max-width: 100%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #FEEEDD;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    max-height: calc(100vh - 100px);
+  }
+  #title-message {
+    display: flex;
+    align-items: center;
+  }
+  #title-message input {
+    width: 100%;
+    resize: none;
+    font-size: 16px;
+    padding: 10px;
+    border: none;
+    background-color: #FDF2E9;
+    color: #333;
+  }
+
+  #chat-message textarea {
+    width: 100%;
+    height: 300px;
+    resize: none;
+    font-size: 16px;
+    padding: 10px;
+    border: none;
+    background-color: #FDF2E9;
+    color: #333;
+  }
+
+  #chat-message textarea:focus {
+    outline: none;
+  }
+
+  #chat-message button {
+    display: block;
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #FFA07A;
+    border: gray;
+    color: #FFF;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  #chat-message button:hover {
+    background-color: #FF7F50;
+  }
+
+  #chat-history {
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #DDD;
+  }
+
+  #chat-history p {
+    font-size: 16px;
+    margin-bottom: 10px;
+    position: relative;
+    padding-left: 20px;
+  }
+
+  
+
+  #chat-history p .feedback {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 5px;
+  }
+
+  #chat-history p .feedback button {
+    cursor: pointer;
+    background-color: transparent;
+  }
+
+  #chat-history p .feedback button:focus {
+    outline: none;
+  }
+
+  #chat-history p.assistant-text {
+    padding-right: 35px;
+    background-color: #f0ebebe3;
+
+  }
+
+  #history {
+    font-size: 16px;
+    color: #333;
+  }
+
+
+  .button-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .button {
+      margin: 5px;
+    }
+
+    @media (max-width: 480px) {
+      .button {
+        width: 100%;
+      }
+    }
+</style>
+<div id="chat-box">
+  <div>
+    <label for="toggle">Chat with Gagali</label>
+    <label class="switch">
+      <input type="checkbox" id="quietToggle">
+      <span class="slider round"></span>
+    </label>
+    <label for="toggle">Write alone</label>
+  </div>
+  <div id="title-message">
+    <input type="text" id="entryTitle" name="entryTitle" placeholder="Title: {{entry.title}}" oninput="submitEntryTitle('{{ entry._id }}')">
+  </div>
+  <div id="chat-history">
+    <div id="history">
+      {% for chat in entry.chats[2:] %}
+      {% if chat.role=='assistant' %}
+      <p class="assistant-text">
+        {{ chat.content }}
+      </p>
+      {% else %}
+      <p>{{ chat.content }}</p> 
+      {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+  <div id="chat-message">
+    <textarea id="message" autofocus></textarea>
+    <button class="fa fa-paper-plane-o" onclick="sendMessage('{{ entry._id }}')"></button>
+    <div class="button-container">
+      <button class="button" onclick="doneFunc('{{ entry._id }}')">Done</button>
+      <button class="button" onclick="sendInsights('{{ entry._id }}')">Insights</button>
+      <button class="button" onclick="sendActions('{{ entry._id }}')">Actions</button>
+    </div>
+  </div>
+</div>
+<script src="{{ url_for('static', filename='chat.js') }}"></script>
+
+{% endblock %}

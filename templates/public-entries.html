@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}
+    Shared entries
+{% endblock %}
+
+{% block content %}
+<div>
+    <h4>Shared entries</h4>
+    <ul>
+      {% for entry in entries %}
+      
+        <p><strong><a href="/public-entry/{{entry['_id']}}">{{entry['title']}}</a></strong><span class="timestamp" data-timestamp="{{ entry.last_update }}">{{ entry.last_update }}</span></p>
+        <p>{{entry['excerpt']}}</p>
+        <hr class="faint-line">
+      {% endfor %}
+    </ul> 
+</div>
+<script src="{{ url_for('static', filename='public_entries.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Personal{% endblock %}
+{% block content %}
+<div class="content">
+  <div class="word-cloud">
+    <img src="data:image/png;base64,{{ wordcloud|b64encode }}" alt="Word cloud">
+  </div>
+
+  <div class="completed-entry">
+    <div style="text-align:right"><p><strong><a href="/chat">Start a new entry</a></strong></p></div>
+    <h4>In-progress <span class="symbol">&#9998;</span></h4>
+    <table>
+      <tbody>
+        {% for entry in in_progress_entries %}
+        <tr>
+          <td><a href="/chat/{{entry['_id']}}">{{entry['title']}}</a></td>
+          <td><em>{{entry['last_update']|timestamp_to_local_time }}</em></td>
+          <td><em></em></td>
+          <td class="delete-icon" onclick="deleteItem(this, '{{ entry._id }}')">🗑️</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+
+    <h4>Completed <span class="symbol">&#10003;</span></h4>
+    {% if completed_entries %}
+    <table>
+      <tbody>
+        {% for entry in completed_entries %}
+        <tr>
+          <td><a href="/past_entries/{{entry['_id']}}">{{entry['title']}}</a></td>
+          <td><em>{{entry['last_update']|timestamp_to_local_time }}</em></td>
+          <td>
+            <i class="private" onclick="togglePrivacy(this, '{{ entry._id }}')">
+              {% if entry['private'] %}Private{% else %}Public{% endif %}
+            </i>
+          </td>
+          <td class="delete-icon" onclick="deleteItem(this, '{{ entry._id }}')">🗑️</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p>No completed entries.</p>
+    {% endif %}
+  </div>
+</div>
+<script src="{{ url_for('static', filename='home.js') }}"></script>
+{% endblock %}
