@@ -8,7 +8,7 @@ venv/
 env/
 .venv/
 ENV/
-
+.env
 # IDEs and editors
 .idea/
 .vscode/

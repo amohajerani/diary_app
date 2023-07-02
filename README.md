@@ -199,27 +199,21 @@ Setting up a new EC2 instance:
 - associate elastic ip with the instance
 - in the security tab, click on security group and add a custom at port 8000
 - connect and git clone https://github.com/amohajerani/interactivediary.git
-- cd interactivediary/app
+- cd diary_app
 - vim .env
 - copy and past all the .env content
 - cd ..
-- cd nginx
-- vim ssl_ke.pem and then copy and paste the content
-- vim ssl_privat_ke.pem and then copy and paste the content
-- cd ..
 - sudo apt update
-- sudo apt install -y apt-transport-https ca-certificates curl software-properties-common
-- curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
-- echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-- sudo apt update
-- sudo apt install -y docker-ce docker-ce-cli containerd.io
-- sudo systemctl start docker
-- sudo systemctl enable docker
-- docker --version
-- inside the interactivediary/app folder: sudo mkdir ~/.aws
-- sudo touch .aws/credentials
-- vim .aws/credentials
+- sudo apt-get install docker.io
+- sudo mkdir ~/.aws
+- sudo touch ~/.aws/credentials
+- sudo vim ~/.aws/credentials
 - copy the following:
   [default]
   aws_access_key_id = YOUR_AWS_ACCESS_KEY_ID
   aws_secret_access_key = YOUR_AWS_SECRET_ACCESS_KEY
+
+
+  Now you have the instance ready. Let's run a container:
+  cd ~
+  - sudo docker build --memory 4g -t app .
