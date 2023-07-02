@@ -1,0 +1,37 @@
+# Python
+*.pyc
+*.pyo
+__pycache__/
+
+# Virtual Environment
+venv/
+env/
+.venv/
+ENV/
+
+# IDEs and editors
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Dependencies
+/.venv/
+/lib/
+/build/
+/dist/
+/*.egg-info/
+*.egg
+pip-log.txt
+
+# Testing
+/nose2-results/
+/htmlcov/
+
+# Documentation
+/doc/
+/docs/
+
+# Other
+*.log
+.DS_Store
