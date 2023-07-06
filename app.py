@@ -233,17 +233,12 @@ def delte_entry(entry_id):
 
 
 
-
 @app.route('/change-to-in-progress', methods=['POST'])
 @ require_auth
 def change_to_in_progress():
     entry_id = request.json['entry_id']
     orm.update_entry(entry_id, {'completed':False})
     return {'success':True}
-
-@app.route('/landing')
-def landing():
-    return render_template('freed.html')
 
 
 @ app.route("/tmp")
@@ -324,6 +319,26 @@ def get_public_entry(entry_id):
     return render_template('public-entry.html', entry=entry, comments=comments)
 
 
+@app.route('/profile')
+#@ require_auth
+def profile():
+    user_id = '6464e7ac009a56e46cc4ca4c'
+    profile = orm.get_profile(user_id)
+
+    return render_template('profile.html', profile=profile)
+
+
+@app.route('/update-profile', methods=['POST'])
+def update_profile():
+    user_id = '6464e7ac009a56e46cc4ca4c'
+    first_name = request.form['first_name']
+    last_name = request.form['last_name']
+    receive_email = request.form['receive_email']
+    therapist_email = request.form['therapist_email']
+
+    orm.update_profile( user_id,{'first_name':first_name,'last_name':last_name,'receive_email':receive_email, 'therapist_email':therapist_email})
+    
+    return redirect('/')
 
 
 if __name__ == "__main__":

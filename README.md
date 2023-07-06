@@ -205,9 +205,10 @@ Setting up a new EC2 instance:
 - cd ..
 - sudo apt update
 - sudo apt-get install docker.io
-- sudo mkdir ~/.aws
-- sudo touch ~/.aws/credentials
-- sudo vim ~/.aws/credentials
+- cd diary_app
+- sudo mkdir ./.aws
+- sudo touch ./.aws/credentials
+- sudo vim ./.aws/credentials
 - copy the following:
   [default]
   aws_access_key_id = YOUR_AWS_ACCESS_KEY_ID
@@ -215,5 +216,7 @@ Setting up a new EC2 instance:
 
 
   Now you have the instance ready. Let's run a container:
-  cd ~
+  - cd diary_app
   - sudo docker build --memory 4g -t app .
+  - sudo docker run --name app -d -p 8000:8000 -p 27017:27017 -p 27016:27016 -p 27015:27015 app
+

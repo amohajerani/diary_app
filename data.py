@@ -142,7 +142,7 @@ def get_response(req_data):
             start += 1
     try:
         res = openai.ChatCompletion.create(
-            model="gpt-3.5-turbo-16k-0613",
+            model="gpt-4",
             messages=messages,
             max_tokens=max_chat_tokens,
             temperature=0.0,

@@ -220,3 +220,15 @@ def get_comments(entry_id):
     comments = list(Comments.find({'entry_id': entry_id}, {'user_id':0}))
     comments = sorted(comments, key=lambda x: x["last_update"], reverse=True)
     return comments
+
+def get_profile(user_id):
+    profile = Users.find_one({'_id':ObjectId(user_id)}, {'first_name':1,'last_name':1, 'therapist_email':1, 'receive_email':1})
+    if 'receive_email' not in profile:
+        profile['receive_email']=True
+    for key in ['first_name','last_name', 'therapist_email']:
+        if key not in profile:
+            profile[key]=''
+    return profile
+
+def update_profile(user_id, update_data):
+    Users.update_one({'_id': ObjectId(user_id)}, update_data)
