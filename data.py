@@ -176,6 +176,7 @@ def get_response(req_data):
                 max_tokens=max_chat_tokens,
                 temperature=0.0,
             )
+            outpt = res['choices'][0]['message']['content']
 
         except Exception as e:
             logger.exception('openai exception occured')

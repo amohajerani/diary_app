@@ -43,7 +43,7 @@ stopBtn.addEventListener("click", function () {
 })
 
 notesBtn.addEventListener("click", function () {
-    if (resultIndex<1){alert("Too short. Keep recording please.")}
+    if (resultIndex<0){alert("Too short. Keep recording please.")}
     else {
         isStopped = true;
         recognition.stop();
