@@ -39,6 +39,10 @@ openai.api_key = env.get("OPENAI_KEY")
 
 # this is the system message for chat echanges
 
+summary_note_prompt = """You are a therapist. Write summary notes for a therapy session, using the transcription provided.
+The transcription: {txt}
+Summay note:"""
+
 summarize_prompt = """Identify the most salient sentiment of my diary.  List most important facts, organized into 4 brief bullets points.
 Diary: {text}
 Summary:"""
@@ -444,3 +448,20 @@ def get_public_entry(entry_id):
     entry = orm.get_entry(entry_id, public=True)
     return entry
 
+def get_summary_note(txt):
+    prompt = summary_note_prompt.format(text=txt)
+    try:
+        res = openai.Completion.create(
+            model="text-curie-001",
+            prompt=prompt,
+            temperature=0.15,
+            max_tokens=500,
+            top_p=1,
+            frequency_penalty=0,
+            presence_penalty=0
+        )
+        res = res['choices'][0]['text']
+        return res
+    except Exception as e:
+        logger.exception('actions error')
+        return ''

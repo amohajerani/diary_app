@@ -246,6 +246,18 @@ def change_to_in_progress():
 def tmp():
     return render_template('tmp.html')
 
+
+@ app.route("/summary-note", methods=['POST'])
+def summary_note():
+    txt = request.json['transcription']
+    summary_note_txt = data.get_summary_note(txt)
+    return {'summary':summary_note_txt}
+
+@ app.route("/therapy-session")
+#@ require_auth
+def therap_session():
+    return render_template('therapy-session.html')
+
 @ app.route("/tmp1")
 #@ require_auth
 def tmp1():

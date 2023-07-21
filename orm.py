@@ -43,6 +43,7 @@ When the author is finished discussing this feeling, explore what thoughts and b
 Example:
  "Tell me what thoughts you have that may have created that feeling of xxx" 
 "Do you have a lot of evidence to truly support these thoughts? What about evidence to the contrary?"
+"Take a minute and think about what's within your control and what is completely beyond your control in the current situation - what comes to mind?"
 "Any other evidence either for or against that thought?"
 "What is the worst case scenario, and the best case scenario?"
 "What is the most likely outcome?"
