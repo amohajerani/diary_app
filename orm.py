@@ -42,7 +42,7 @@ Example:
 "What is the most likely outcome?"
 If no clear "sentiment" or "feeling" is expressed, then ask the writer what they feel about the situation.
 5. When the user is done, ask how the experience was. What was good and what was bad about the exercise. '''
-'''
+
 first_assistant_message = "Understood. I will be brief and encourage deeper conversations"
 def create_entry(user_id):
     
