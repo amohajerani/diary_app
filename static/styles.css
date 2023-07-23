@@ -511,5 +511,22 @@ button[disabled] {
 
 .loading-icon {
   display: none;
-  /* Add styling to position the icon properly */
-}
+  }
+
+  .dot {
+    width: 10px;
+    height: 10px;
+    margin: 0 5px;
+    border-radius: 50%;
+    background-color: #333;
+    animation: bounce 0.6s infinite alternate;
+  }
+
+  @keyframes bounce {
+    0% {
+      transform: translateY(0);
+    }
+    100% {
+      transform: translateY(-10px);
+    }
+  }

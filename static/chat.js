@@ -13,7 +13,7 @@ function sendMessage(entry_id) {
   if (message === "") return
   document.getElementById("message").value = ""
   const loadingIcon = document.getElementById("loadingIcon")
-  loadingIcon.style.display = "block"
+  loadingIcon.style.display = "flex"
 
   fetch("/get_response", {
     method: "POST",
