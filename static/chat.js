@@ -12,6 +12,8 @@ function sendMessage(entry_id) {
   const message = document.getElementById("message").value.trim()
   if (message === "") return
   document.getElementById("message").value = ""
+  const loadingIcon = document.getElementById("loadingIcon");
+  loadingIcon.style.display = "block";
 
   fetch("/get_response", {
     method: "POST",
@@ -34,6 +36,7 @@ function sendMessage(entry_id) {
     .catch((error) => {
       console.error("Error:", error)
     })
+    loadingIcon.style.display = "none";
 }
 
 function appendMessageToHistory(role, content, entry_id) {

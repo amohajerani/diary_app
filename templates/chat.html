@@ -147,6 +147,9 @@ Entry
       {% endfor %}
     </div>
   </div>
+  <div class="loading-icon" id="loadingIcon">
+    <img src="loading.gif" alt="Loading..." />
+  </div>
   <div id="chat-message">
     <textarea id="message" autofocus></textarea>
     <button class="fa fa-paper-plane-o" onclick="sendMessage('{{ entry._id }}')"></button>

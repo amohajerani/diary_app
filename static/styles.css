@@ -508,3 +508,8 @@ button[disabled] {
   opacity: 0.5;
   cursor: not-allowed;
 }
+
+.loading-icon {
+  display: none;
+  /* Add styling to position the icon properly */
+}
