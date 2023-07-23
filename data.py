@@ -160,7 +160,7 @@ def get_response(req_data):
         'help' in outpt,
         'really' in outpt]
     if sum(conditions)>=3:
-        followup = "I understand. Help me process this situation and my feeling."
+        followup = "I understand. Help me cope with the situation and process my feelings."
         messages.append({'role': 'assistant', 'content': outpt})
         messages.append({'role': 'user', 'content': followup})
         try:
