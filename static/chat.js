@@ -12,8 +12,8 @@ function sendMessage(entry_id) {
   const message = document.getElementById("message").value.trim()
   if (message === "") return
   document.getElementById("message").value = ""
-  const loadingIcon = document.getElementById("loadingIcon");
-  loadingIcon.style.display = "block";
+  const loadingIcon = document.getElementById("loadingIcon")
+  loadingIcon.style.display = "block"
 
   fetch("/get_response", {
     method: "POST",
@@ -32,11 +32,13 @@ function sendMessage(entry_id) {
       if (!quietMode) {
         appendMessageToHistory("assistant", response, entry_id)
       }
+      loadingIcon.style.display = "none"
     })
     .catch((error) => {
       console.error("Error:", error)
+      loadingIcon.style.display = "none"
     })
-    loadingIcon.style.display = "none";
+  
 }
 
 function appendMessageToHistory(role, content, entry_id) {
@@ -45,20 +47,25 @@ function appendMessageToHistory(role, content, entry_id) {
   let historyHTML = ""
   for (const message of chatHistory) {
     let messageContent = message.content
-    let messageHTML = `<p>${messageContent}</p>`;
+    let messageHTML = `<p>${messageContent}</p>`
     if (message.role === "assistant") {
-      if (message === chatHistory[chatHistory.length - 1]) { // Check if it's the last message in the history
-        let messageContentModified = messageContent.replace(/["']/g, '_');
+      if (message === chatHistory[chatHistory.length - 1]) {
+        // Check if it's the last message in the history
+        let messageContentModified = messageContent.replace(/["']/g, "_")
         messageHTML = `
         <p class="assistant-text">
           ${messageContent}
           <span class="feedback">
-            <button class="fa fa-thumbs-up" onclick='sendFeedback("${entry_id}", ${JSON.stringify(messageContentModified)}, 1, this)'></button>
-            <button class="fa fa-thumbs-down" onclick='sendFeedback("${entry_id}", ${JSON.stringify(messageContentModified)}, -1, this)'></button>
+            <button class="fa fa-thumbs-up" onclick='sendFeedback("${entry_id}", ${JSON.stringify(
+          messageContentModified
+        )}, 1, this)'></button>
+            <button class="fa fa-thumbs-down" onclick='sendFeedback("${entry_id}", ${JSON.stringify(
+          messageContentModified
+        )}, -1, this)'></button>
           </span>
-        </p>`;
+        </p>`
       } else {
-        messageHTML = `<p class="assistant-text">${messageContent}</p>`;
+        messageHTML = `<p class="assistant-text">${messageContent}</p>`
       }
     }
     if (message.role === "insights") {
@@ -75,7 +82,6 @@ function appendMessageToHistory(role, content, entry_id) {
   document.getElementById("history").innerHTML = historyHTML
 }
 
-
 // Retrieve the chat history from the rendered HTML and update chatHistory array
 const chatHistoryElement = document.getElementById("history")
 const initialChatHistory = chatHistoryElement.querySelectorAll("p")
@@ -83,11 +89,12 @@ var role = "user"
 for (const messageElement of initialChatHistory) {
   const content = messageElement.innerHTML
   chatHistory.push({ role, content })
-  if (role=='user') {
-     role = "assistant"}
-  else {role = 'user'}
+  if (role == "user") {
+    role = "assistant"
+  } else {
+    role = "user"
+  }
 }
-
 
 function sendInsights(entry_id) {
   fetch("/analyze/insights/" + entry_id, {
@@ -116,34 +123,32 @@ function sendActions(entry_id) {
     .then((response) => {
       response.forEach((item) => {
         // Perform operations with each item in the array
-        appendMessageToHistory("actions", item, true);
-      });
+        appendMessageToHistory("actions", item, true)
+      })
     })
     .catch((error) => {
-      console.error("Error:", error);
-    });
+      console.error("Error:", error)
+    })
 }
-
 
 function doneFunc(entry_id) {
   fetch("/entry-done/" + entry_id)
-    .then(function(response) {
+    .then(function (response) {
       if (response.ok) {
-        quietMode = true;
-        sendMessage(entry_id);
-        window.location.href = '/';
+        quietMode = true
+        sendMessage(entry_id)
+        window.location.href = "/"
       } else {
-        console.error('Redirect failed');
+        console.error("Redirect failed")
       }
     })
-    .catch(function(error) {
-      console.error('An error occurred:', error);
-    });
+    .catch(function (error) {
+      console.error("An error occurred:", error)
+    })
 }
 
-
 function submitEntryTitle(entry_id) {
-  var entryTitle = document.getElementById("entryTitle").value;
+  var entryTitle = document.getElementById("entryTitle").value
   // Make a POST request to the server
   fetch("/entry-title", {
     method: "POST",
@@ -155,37 +160,37 @@ function submitEntryTitle(entry_id) {
       entry_id: entry_id,
     }),
   }).catch((error) => {
-      // Handle any errors that occurred during the request
-      console.error("Error:", error)
-    })
+    // Handle any errors that occurred during the request
+    console.error("Error:", error)
+  })
 }
 
 function sendFeedback(entry_id, content, feedback, button) {
   const feedbackData = {
     entry_id: entry_id,
     content: content,
-    feedback: feedback
-  };
+    feedback: feedback,
+  }
 
-  fetch('/chat-feedback', {
-    method: 'POST',
+  fetch("/chat-feedback", {
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json'
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(feedbackData)
+    body: JSON.stringify(feedbackData),
   })
-  .then(response => {
-    if (response.ok) {
-      console.log('Feedback sent successfully');
-      // Highlight the button
-      button.classList.add("highlighted");
-    } else {
-      console.log('Failed to send feedback');
+    .then((response) => {
+      if (response.ok) {
+        console.log("Feedback sent successfully")
+        // Highlight the button
+        button.classList.add("highlighted")
+      } else {
+        console.log("Failed to send feedback")
+        // Handle any errors or display appropriate error message
+      }
+    })
+    .catch((error) => {
+      console.log("Error:", error)
       // Handle any errors or display appropriate error message
-    }
-  })
-  .catch(error => {
-    console.log('Error:', error);
-    // Handle any errors or display appropriate error message
-  });
+    })
 }
