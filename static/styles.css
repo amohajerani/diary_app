@@ -512,30 +512,23 @@ button[disabled] {
 .loading-icon {
   display: none;
   }
-
   .dot {
     width: 10px;
     height: 10px;
     margin: 0 5px;
     border-radius: 50%;
-    background-color: rgb(157, 156, 156);
-    animation: move 1.5s infinite alternate;
+    background-color: #333;
+    animation: colorTransition 1.5s infinite linear;
   }
   
-  @keyframes move {
+  @keyframes colorTransition {
     0% {
-      transform: translateX(0);
-    }
-    25% {
-      transform: translateX(20px);
+      background-color: #333;
     }
     50% {
-      transform: translateX(0);
-    }
-    75% {
-      transform: translateX(-20px);
+      background-color: transparent;
     }
     100% {
-      transform: translateX(0);
+      background-color: #333;
     }
   }
