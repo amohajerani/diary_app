@@ -95,9 +95,9 @@ def get_user_id(email):
     '''
     user = orm.Users.find_one({'email': email})
     if user:
-        return str(user['_id']), user.get('terms_conditions', False)
+        return str(user['_id']), user.get('terms_conditions', False), user.get('role','user')
     user = orm.Users.insert_one(
-        {'email': email, 'subscriptions': [], 'subscribers': []})
+        {'email': email})
     return str(user.inserted_id), False
 
 

@@ -72,9 +72,11 @@ def public_entries():
 def callback():
     token = oauth.auth0.authorize_access_token()
     session["user"] = token
-    session['user']['user_id'], terms_conditions = data.get_user_id(
+    session['user']['user_id'], terms_conditions, role = data.get_user_id(
         session['user']['userinfo']['email'])
 
+    if role!='user':
+        return redirect('/logout')
     # if user has not signed the agreement, this is the time
     if not terms_conditions:
         return redirect('/terms')
