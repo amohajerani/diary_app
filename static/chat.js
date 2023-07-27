@@ -43,7 +43,6 @@ function sendMessage(entry_id) {
       console.error("Error:", error)
       loadingIcon.style.display = "none"
     })
-    scrollToBottom();
   
 }
 
@@ -86,6 +85,7 @@ function appendMessageToHistory(role, content, entry_id) {
   }
 
   document.getElementById("history").innerHTML = historyHTML
+  scrollToBottom();
 }
 
 // Retrieve the chat history from the rendered HTML and update chatHistory array

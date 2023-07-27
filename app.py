@@ -130,6 +130,15 @@ def chat(entry_id):
     return render_template('chat.html', entry=entry)
 
 
+@app.route('/tmp/', defaults={'entry_id': 'new'}, methods=['GET'])
+@app.route("/tmp/<entry_id>")
+def tmp(entry_id):
+    '''
+    Create a new chat
+    '''
+    entry = orm.get_entry('64c2d5e562f3c3bc04d98b01')
+    return render_template('chat.html', entry=entry)
+
 @app.route('/get_response', methods=['POST'])
 @require_auth
 def get_response():
