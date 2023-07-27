@@ -36,6 +36,10 @@ oauth.register(
 def b64encode_filter(s):
     return base64.b64encode(s).decode('utf-8')
 
+@app.route("/login")
+def login():
+    redirect_uri = url_for("callback", _scheme='https', _external=True)
+    return oauth.auth0.authorize_redirect(redirect_uri=redirect_uri)
 
 def require_auth(func):
     def wrapper(*args, **kwargs):
@@ -75,20 +79,12 @@ def callback():
     if not terms_conditions:
         return redirect('/terms')
     else:
-        return redirect("/")
+        return redirect("https://thegagali.com")
 
 
 @app.route('/terms')
 def terms():
     return render_template('terms.html')
-
-
-
-
-@app.route("/login")
-def login():
-    redirect_uri = url_for("callback", _scheme='https', _external=True)
-    return oauth.auth0.authorize_redirect(redirect_uri=redirect_uri)
 
 
 @app.route("/register_user")
