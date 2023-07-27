@@ -15,10 +15,12 @@ Entry
     overflow-y: auto;
     max-height: calc(100vh - 100px);
   }
+
   #title-message {
     display: flex;
     align-items: center;
   }
+
   #title-message input {
     width: 100%;
     resize: none;
@@ -73,7 +75,7 @@ Entry
     padding-left: 20px;
   }
 
-  
+
 
   #chat-history p .feedback {
     position: absolute;
@@ -108,19 +110,20 @@ Entry
 
 
   .button-container {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-    .button {
-      margin: 5px;
-    }
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
 
-    @media (max-width: 480px) {
-      .button {
-        width: 100%;
-      }
+  .button {
+    margin: 5px;
+  }
+
+  @media (max-width: 480px) {
+    .button {
+      width: 100%;
     }
+  }
 </style>
 <div id="chat-box">
   <div>
@@ -132,7 +135,8 @@ Entry
     <label for="toggle">Write alone</label>
   </div>
   <div id="title-message">
-    <input type="text" id="entryTitle" name="entryTitle" placeholder="Title: {{entry.title}}" oninput="submitEntryTitle('{{ entry._id }}')">
+    <input type="text" id="entryTitle" name="entryTitle" placeholder="Title: {{entry.title}}"
+      oninput="submitEntryTitle('{{ entry._id }}')">
   </div>
   <div id="chat-history">
     <div id="history">
@@ -142,7 +146,7 @@ Entry
         {{ chat.content }}
       </p>
       {% else %}
-      <p>{{ chat.content }}</p> 
+      <p>{{ chat.content }}</p>
       {% endif %}
       {% endfor %}
     </div>
@@ -152,6 +156,7 @@ Entry
     <div class="dot"></div>
     <div class="dot"></div>
   </div>
+</div>
   <div id="chat-message">
     <textarea id="message" autofocus></textarea>
     <button class="fa fa-paper-plane-o" onclick="sendMessage('{{ entry._id }}')"></button>
@@ -161,7 +166,7 @@ Entry
       <button class="button" onclick="sendActions('{{ entry._id }}')">Actions</button>
     </div>
   </div>
-</div>
+
 <script src="{{ url_for('static', filename='chat.js') }}"></script>
 
 {% endblock %}
