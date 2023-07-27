@@ -79,7 +79,7 @@ def callback():
     if not terms_conditions:
         return redirect('/terms')
     else:
-        return redirect("https://thegagali.com")
+        return redirect("/")
 
 
 @app.route('/terms')
