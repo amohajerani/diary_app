@@ -50,7 +50,7 @@ def require_auth(func):
 @app.route("/")
 def home():
     if not session.get('user', None):
-        return render_template('landing.html')
+        return redirect('https://thegagali.com')
     user_id = session['user']['user_id']
     in_progress_entries , completed_entries = orm.get_entries(
         user_id=user_id)
@@ -91,11 +91,11 @@ def login():
     return oauth.auth0.authorize_redirect(redirect_uri=redirect_uri)
 
 
-@app.route("/register_terms")
+@app.route("/register_user")
 @require_auth
-def register_terms():
+def register_user():
     try:
-        data.register_terms(session['user']['user_id'])
+        data.register_user(session['user']['user_id'])
         return redirect("/")
     except:
         return 'please try again'
@@ -161,22 +161,11 @@ def admin(entry_id):
     return redirect("/past_entries/"+entry_id)
 
 
-@ app.route("/privacy")
-def privacy():
-    return render_template('privacy.html')
-
-@app.route('/logo')
-def get_log0():
-    return send_file('./static/gagalilogo.jpg', mimetype='image/jpg')
-
 
 @app.route('/static/<folder>/<filename>')
 def get_static_file(folder, filename):
     return send_file('./static/'+folder+'/'+filename)
 
-@app.route('/assets/<folder>/<filename>')
-def get_assets(folder,filename):
-    return send_file('./assets/'+folder+'/'+filename)
 
 @app.route('/analyze/<analysis_type>/<entry_id>')
 @require_auth
@@ -241,33 +230,6 @@ def change_to_in_progress():
     return {'success':True}
 
 
-@ app.route("/tmp")
-#@ require_auth
-def tmp():
-    return render_template('tmp.html')
-
-
-@ app.route("/summary-note", methods=['POST'])
-def summary_note():
-    txt = request.json['transcription']
-    summary_note_txt = data.get_summary_note(txt)
-    return {'summary':summary_note_txt}
-
-@ app.route("/therapy-session")
-#@ require_auth
-def therap_session():
-    return render_template('therapy-session.html')
-
-@ app.route("/tmp1")
-#@ require_auth
-def tmp1():
-    user_id = '6464e7ac009a56e46cc4ca4c'
-    in_progress_entries , completed_entries = orm.get_entries(
-        user_id=user_id)
-    wordcloud = orm.get_wordcloud_file(user_id)
-    return render_template('personal.html', in_progress_entries=in_progress_entries, completed_entries=completed_entries, wordcloud=wordcloud)
-
-
 @ app.route("/update-privacy", methods=['POST'])
 @ require_auth
 def update_privacy():
@@ -276,27 +238,11 @@ def update_privacy():
     orm.update_entry(entry_id, {'private':private})
     return 'success'
 
-@app.route('/feedback', methods=['GET','POST'])
-def submit_feedback():
-    if request.method=='GET':
-        return render_template('feedback.html')
-    else:
-        feedback = request.form.get('feedback')
-        orm.insert_feedback(feedback)
-        return redirect("/")
-
-@app.route('/how-it-works')
-def how_it_works():
-    return render_template('how-it-works.html')
 
 @app.template_filter('timestamp_to_local_time')
 def timestamp_to_local_time(timestamp):
     return datetime.datetime.fromtimestamp(int(timestamp)).strftime('%Y-%m-%d')
 
-
-@app.route('/about')
-def about():
-    return render_template('about.html')
 
 @app.route('/chat-feedback', methods=['POST'])
 @require_auth
@@ -323,8 +269,9 @@ def add_comment():
     
     return redirect(f'/public-entry/{entry_id}')
 
+
 @app.route('/public-entry/<entry_id>')
-#@require_auth
+@require_auth
 def get_public_entry(entry_id):
     entry=data.get_public_entry(entry_id)
     comments = orm.get_comments(entry_id)
@@ -332,7 +279,7 @@ def get_public_entry(entry_id):
 
 
 @app.route('/profile')
-#@ require_auth
+@ require_auth
 def profile():
     user_id = '6464e7ac009a56e46cc4ca4c'
     profile = orm.get_profile(user_id)

@@ -445,9 +445,9 @@ def send_email(entry, email):
         print(response['MessageId'])
 
 
-def register_terms(user_id):
+def register_user(user_id):
     try:
-        orm.Users.update_one({'_id': ObjectId(user_id)}, {'$set': {'terms_conditions': True}}
+        orm.Users.update_one({'_id': ObjectId(user_id)}, {'$set': {'terms_conditions': True}, 'role':'user'}
                              )
     except Exception as e:
         logger.exception('register terms error')
