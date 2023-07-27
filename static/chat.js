@@ -8,6 +8,11 @@ checkbox.addEventListener("change", function () {
 
 let chatHistory = []
 
+function scrollToBottom() {
+  var chatHistory = document.getElementById('chat-history');
+  chatHistory.scrollTop = chatHistory.scrollHeight;
+}
+
 function sendMessage(entry_id) {
   const message = document.getElementById("message").value.trim()
   if (message === "") return
@@ -38,6 +43,7 @@ function sendMessage(entry_id) {
       console.error("Error:", error)
       loadingIcon.style.display = "none"
     })
+    scrollToBottom();
   
 }
 
