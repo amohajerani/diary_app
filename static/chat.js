@@ -13,6 +13,7 @@ textAreaElement.addEventListener("keydown", function(event) {
   if (event.key === "Enter" || event.keyCode === 13 || event.keyCode === 10) {
     event.preventDefault();
     const entry_id = textAreaElement.dataset.entry_id;
+    console.log('entry_id is : ',entry_id)
     sendMessage(entry_id);
   }})
 
