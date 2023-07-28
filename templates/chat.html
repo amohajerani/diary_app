@@ -144,7 +144,7 @@ Entry
   </div>
 </div>
 <div id="chat-message">
-  <textarea id="message" autofocus></textarea>
+  <textarea id="message" autofocus data-entry-id='{{ entry._id }}'></textarea>
   <button class="button" onclick="sendMessage('{{ entry._id }}')">Send</button>
   <div class="button-container">
     <button class="button" onclick="doneFunc('{{ entry._id }}')">Done</button>
