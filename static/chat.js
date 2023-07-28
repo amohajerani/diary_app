@@ -11,10 +11,11 @@ let chatHistory = []
 textAreaElement = document.getElementById("message")
 textAreaElement.addEventListener("keydown", function(event) {
   if (event.key === "Enter" || event.keyCode === 13 || event.keyCode === 10) {
-    event.preventDefault();
-    const entry_id = textAreaElement.getAttribute("data-entry-id");
-    console.log('entry_id is : ',entry_id)
-    sendMessage(entry_id);
+    if (!event.shiftKey) {
+      event.preventDefault();
+      const entry_id = textAreaElement.getAttribute("data-entry-id");
+      sendMessage(entry_id);
+    }
   }})
 
 function sendMessage(entry_id) {
