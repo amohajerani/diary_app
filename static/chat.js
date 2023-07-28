@@ -8,15 +8,17 @@ checkbox.addEventListener("change", function () {
 
 let chatHistory = []
 
-function scrollToBottom() {
-  var chatHistory = document.getElementById('chat-history');
-  chatHistory.scrollTop = chatHistory.scrollHeight;
-}
+textAreaElement = document.getElementById("message")
+textAreaElement.addEventListener("keydown", function(event) {
+  if (event.key === "Enter" || event.keyCode === 13 || event.keyCode === 10) {
+    event.preventDefault();
+    sendMessage(entry_id);
+  }})
 
 function sendMessage(entry_id) {
-  const message = document.getElementById("message").value.trim()
+  const message = textAreaElement.value.trim()
   if (message === "") return
-  document.getElementById("message").value = ""
+  textAreaElement.value = ""
   const loadingIcon = document.getElementById("loadingIcon")
   loadingIcon.style.display = "flex"
 
@@ -43,9 +45,11 @@ function sendMessage(entry_id) {
       console.error("Error:", error)
       loadingIcon.style.display = "none"
     })
-  
 }
-
+function scrollToBottom() {
+  var chatHistory = document.getElementById("chat-history")
+  chatHistory.scrollTop = chatHistory.scrollHeight
+}
 function appendMessageToHistory(role, content, entry_id) {
   chatHistory.push({ role, content })
 
@@ -85,7 +89,7 @@ function appendMessageToHistory(role, content, entry_id) {
   }
 
   document.getElementById("history").innerHTML = historyHTML
-  setTimeout(scrollToBottom, 0);
+  scrollToBottom()
 }
 
 // Retrieve the chat history from the rendered HTML and update chatHistory array
