@@ -12,7 +12,7 @@ textAreaElement = document.getElementById("message")
 textAreaElement.addEventListener("keydown", function(event) {
   if (event.key === "Enter" || event.keyCode === 13 || event.keyCode === 10) {
     event.preventDefault();
-    const entry_id = document.getElementById("myTextarea").dataset.entryId;
+    const entry_id = document.getElementById("myTextarea").dataset.entry_id;
     sendMessage(entry_id);
   }})
 
