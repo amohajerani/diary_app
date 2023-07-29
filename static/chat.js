@@ -93,7 +93,7 @@ function appendMessageToHistory(role, content, entry_id) {
   }
 
   document.getElementById("history").innerHTML = historyHTML
-  setTimeout(scrollToBottom, 0);
+  setTimeout(scrollToBottom, 100);
 }
 
 // Retrieve the chat history from the rendered HTML and update chatHistory array
