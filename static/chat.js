@@ -7,7 +7,11 @@ checkbox.addEventListener("change", function () {
 })
 
 let chatHistory = []
-
+containerElement = document.getElementById('baseContainer')
+function scrollToBottom() {
+  containerElement.scrollTop = containerElement.scrollHeight;
+}
+scrollToBottom()
 textAreaElement = document.getElementById("message")
 textAreaElement.addEventListener("keydown", function(event) {
   if (event.key === "Enter" || event.keyCode === 13 || event.keyCode === 10) {
@@ -49,10 +53,7 @@ function sendMessage(entry_id) {
       loadingIcon.style.display = "none"
     })
 }
-function scrollToBottom() {
-  var chatHistory = document.getElementById("chat-history")
-  chatHistory.scrollTop = chatHistory.scrollHeight
-}
+
 function appendMessageToHistory(role, content, entry_id) {
   chatHistory.push({ role, content })
 
