@@ -7,9 +7,9 @@ checkbox.addEventListener("change", function () {
 })
 
 let chatHistory = []
-containerElement = document.getElementById('baseContainer')
+
 function scrollToBottom() {
-  containerElement.scrollTop = containerElement.scrollHeight;
+  window.scrollTo(0, document.body.scrollHeight);
 }
 scrollToBottom()
 textAreaElement = document.getElementById("message")
