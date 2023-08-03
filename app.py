@@ -61,6 +61,16 @@ def home():
     wordcloud = orm.get_wordcloud_file(user_id)
     return render_template('personal.html', in_progress_entries=in_progress_entries, completed_entries=completed_entries, wordcloud=wordcloud)
 
+
+@app.route("/tmp1")
+def tmp():
+    user_id = "6464e7ac009a56e46cc4ca4c"
+    in_progress_entries , completed_entries = orm.get_entries(
+        user_id=user_id)
+    wordcloud = orm.get_wordcloud_file(user_id)
+    return render_template('personal.html', in_progress_entries=in_progress_entries, completed_entries=completed_entries, wordcloud=wordcloud)
+
+
 @app.route("/shared")
 #@require_auth
 def public_entries():
