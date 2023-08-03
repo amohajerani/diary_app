@@ -9,18 +9,19 @@ checkbox.addEventListener("change", function () {
 let chatHistory = []
 
 function scrollToBottom() {
-  window.scrollTo(0, document.body.scrollHeight);
+  window.scrollTo(0, document.body.scrollHeight)
 }
 scrollToBottom()
 textAreaElement = document.getElementById("message")
-textAreaElement.addEventListener("keydown", function(event) {
+textAreaElement.addEventListener("keydown", function (event) {
   if (event.key === "Enter" || event.keyCode === 13 || event.keyCode === 10) {
     if (!event.shiftKey) {
-      event.preventDefault();
-      const entry_id = textAreaElement.getAttribute("data-entry-id");
-      sendMessage(entry_id);
+      event.preventDefault()
+      const entry_id = textAreaElement.getAttribute("data-entry-id")
+      sendMessage(entry_id)
     }
-  }})
+  }
+})
 
 function sendMessage(entry_id) {
   const message = textAreaElement.value.trim()
@@ -69,12 +70,12 @@ function appendMessageToHistory(role, content, entry_id) {
         <p class="assistant-text">
           ${messageContent}
           <span class="feedback">
-            <button class="fa fa-thumbs-up" onclick='sendFeedback("${entry_id}", ${JSON.stringify(
+          <i class="bi bi-hand-thumbs-up" onclick='sendFeedback("${entry_id}", ${JSON.stringify(
           messageContentModified
-        )}, 1, this)'></button>
-            <button class="fa fa-thumbs-down" onclick='sendFeedback("${entry_id}", ${JSON.stringify(
+        )}, 1, this)'></i>
+        <i class="bi bi-hand-thumbs-down" onclick='sendFeedback("${entry_id}", ${JSON.stringify(
           messageContentModified
-        )}, -1, this)'></button>
+        )}, -1, this)'></i>
           </span>
         </p>`
       } else {
@@ -85,16 +86,11 @@ function appendMessageToHistory(role, content, entry_id) {
       historyHTML += `<strong><em>Insights: </em></strong>`
       messageHTML = `<em>${messageHTML}</em>`
     }
-    if (message.role === "actions") {
-      historyHTML += `<strong><em>Actions: </em></strong>`
-      messageHTML = `<em>${messageHTML}</em>`
-    }
-    historyHTML += messageHTML
   }
 
   document.getElementById("history").innerHTML = historyHTML
-  console.log('time to scroll down')
-  scrollToBottom();
+  console.log("time to scroll down")
+  scrollToBottom()
 }
 
 // Retrieve the chat history from the rendered HTML and update chatHistory array
@@ -121,25 +117,6 @@ function sendInsights(entry_id) {
     .then((response) => response.text())
     .then((response) => {
       appendMessageToHistory("insights", response, true)
-    })
-    .catch((error) => {
-      console.error("Error:", error)
-    })
-}
-
-function sendActions(entry_id) {
-  fetch("/analyze/actions/" + entry_id, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  })
-    .then((response) => response.json()) // Parse the response as JSON
-    .then((response) => {
-      response.forEach((item) => {
-        // Perform operations with each item in the array
-        appendMessageToHistory("actions", item, true)
-      })
     })
     .catch((error) => {
       console.error("Error:", error)
