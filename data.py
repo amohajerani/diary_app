@@ -95,7 +95,7 @@ def get_user_id(email):
     '''
     user = orm.Users.find_one({'email': email})
     if user:
-        return str(user['_id']), user.get('terms_conditions', False), user.get('role','user')
+        return str(user['_id']), user.get('terms_conditions', False)
     user = orm.Users.insert_one(
         {'email': email})
     return str(user.inserted_id), False
@@ -447,7 +447,7 @@ def send_email(entry, email):
 
 def register_user(user_id):
     try:
-        orm.Users.update_one({'_id': ObjectId(user_id)}, {'$set': {'terms_conditions': True}, 'role':'user'}
+        orm.Users.update_one({'_id': ObjectId(user_id)}, {'$set': {'terms_conditions': True}}
                              )
     except Exception as e:
         logger.exception('register terms error')
