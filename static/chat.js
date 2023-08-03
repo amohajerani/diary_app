@@ -86,6 +86,7 @@ function appendMessageToHistory(role, content, entry_id) {
       historyHTML += `<strong><em>Insights: </em></strong>`
       messageHTML = `<em>${messageHTML}</em>`
     }
+    historyHTML += messageHTML
   }
 
   document.getElementById("history").innerHTML = historyHTML
