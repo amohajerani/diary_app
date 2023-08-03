@@ -127,11 +127,6 @@ def chat(entry_id):
     return render_template('chat.html', entry=entry)
 
 
-
-@app.route("/a")
-def a():
-    return render_template('tmp.html')
-
 @app.route('/get_response', methods=['POST'])
 @require_auth
 def get_response():
