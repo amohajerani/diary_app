@@ -140,7 +140,7 @@ Entry
   </div>
 </div>
 <div id="chat-message">
-  <textarea class="form-control" id="message" autofocus data-entry-id='{{ entry._id }}'></textarea>
+  <textarea class="form-control" id="message" autofocus data-entry-id='{{ entry._id }}' oninput="auto_grow(this)"></textarea>
   <button class="button" onclick="sendMessage('{{ entry._id }}')">Send</button>
   <div class="button-container">
     <button class="button" onclick="doneFunc('{{ entry._id }}')">Done</button>

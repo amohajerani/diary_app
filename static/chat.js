@@ -187,3 +187,8 @@ function sendFeedback(entry_id, content, feedback, button) {
       // Handle any errors or display appropriate error message
     })
 }
+
+function auto_grow(element) {
+  element.style.height = "5px";
+  element.style.height = (element.scrollHeight) + "px";
+}
