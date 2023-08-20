@@ -1,8 +1,3 @@
-"""
-Python Flask WebApp Auth0 integration example
-"""
-from authlib.integrations.flask_client import OAuth
-
 from os import environ as env
 from urllib.parse import quote_plus, urlencode
 from dotenv import find_dotenv, load_dotenv
@@ -13,6 +8,9 @@ import urllib.parse
 import base64
 import datetime
 from logger import logger
+from functools import wraps
+import base64
+
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -20,36 +18,67 @@ if ENV_FILE:
 
 app = data.init_app()
 admin_user_id = '6464e7ac009a56e46cc4ca4c'
-oauth = OAuth(app)
-oauth.register(
-    "auth0",
-    client_id=env.get("AUTH0_CLIENT_ID"),
-    client_secret=env.get("AUTH0_CLIENT_SECRET"),
-    client_kwargs={
-        "scope": "openid profile email",
-    },
-    server_metadata_url=f'https://{env.get("AUTH0_DOMAIN")}/.well-known/openid-configuration',
-)
+
 
 
 @app.template_filter('b64encode')
 def b64encode_filter(s):
     return base64.b64encode(s).decode('utf-8')
 
-@app.route("/login")
-def login():
-    redirect_uri = url_for("callback", _scheme='https', _external=True)
-    return oauth.auth0.authorize_redirect(redirect_uri=redirect_uri)
-
-def require_auth(func):
-    def wrapper(*args, **kwargs):
-        if session.get('user'):
-            return func(*args, **kwargs)
+def login_required(f):
+    @wraps(f)
+    def wrap(*args, **kwargs):
+        if 'logged_in' in session:
+            return f(*args, **kwargs)
         else:
-            return redirect('/login')
-    wrapper.__name__ = func.__name__
-    return wrapper
+            return redirect('/')
+    return wrap
 
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    if request.method == 'GET':
+        return render_template('signup.html', err='')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    user_id = orm.signup(email, password)
+    if user_id:
+        start_session({'email': email, 'user_id': user_id})
+        return redirect('/')
+    else:
+        return render_template('signup.html', err='This email has been already registered. Please log in.')
+
+def start_session(user):
+    session['logged_in'] = True
+    session['user'] = user
+    return None
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    if request.method == 'GET':
+        return render_template('login.html')
+    email = request.form.get('email')
+    password = request.form.get('password')
+    user_id = orm.login(email, password)
+    if user_id:
+        start_session({'email': email, 'user_id': user_id})
+        return redirect('/')
+    else:
+        return render_template('login.html', err='Wrong email or password.')
+
+@app.route('/logout')
+@login_required
+def logout():
+    session.clear()
+    return redirect('/')
+
+@app.route('/forgot-password', methods=['GET', 'POST'])
+def forgot_password():
+    if request.method == 'GET':
+        return render_template('forgot-password.html')
+    email = request.form.get('email')
+    data.reset_password(email)
+    return render_template('forgot-password.html', err='You will receive an email with instructions to reset your password.')
 
 @app.route("/")
 def home():
@@ -62,42 +91,16 @@ def home():
     return render_template('personal.html', in_progress_entries=in_progress_entries, completed_entries=completed_entries, wordcloud=wordcloud)
 
 
-@app.route("/tmp1")
-def tmp():
-    user_id = "6464e7ac009a56e46cc4ca4c"
-    in_progress_entries , completed_entries = orm.get_entries(
-        user_id=user_id)
-    wordcloud = orm.get_wordcloud_file(user_id)
-    return render_template('personal.html', in_progress_entries=in_progress_entries, completed_entries=completed_entries, wordcloud=wordcloud)
-
-
 @app.route("/shared")
-#@require_auth
+#@login_required
 def public_entries():
     entries = orm.get_public_entries()
     return render_template('public-entries.html', entries=entries)
-  
 
-@app.route("/callback", methods=["GET", "POST"])
-def callback():
-    token = oauth.auth0.authorize_access_token()
-    session["user"] = token
-    session['user']['user_id'], terms_conditions = data.get_user_id(
-        session['user']['userinfo']['email'])
-    # if user has not signed the agreement, this is the time
-    if not terms_conditions:
-        return redirect('/terms')
-    else:
-        return redirect("/")
-
-
-@app.route('/terms')
-def terms():
-    return render_template('terms.html')
 
 
 @app.route("/register_user")
-@require_auth
+@login_required
 def register_user():
     try:
         data.register_user(session['user']['user_id'])
@@ -106,26 +109,11 @@ def register_user():
         return 'please try again'
 
 
-@app.route("/logout")
-@require_auth
-def logout():
-    session.clear()
-    return redirect(
-        "https://"
-        + env.get("AUTH0_DOMAIN")
-        + "/v2/logout?"
-        + urlencode(
-            {
-                "returnTo": "https://www.thegagali.com",
-                "client_id": env.get("AUTH0_CLIENT_ID"),
-            },
-            quote_via=quote_plus,
-        )
-    )
+
 
 @app.route('/chat/', defaults={'entry_id': 'new'}, methods=['GET'])
 @app.route("/chat/<entry_id>")
-@require_auth
+@login_required
 def chat(entry_id):
     '''
     Create a new chat
@@ -138,13 +126,13 @@ def chat(entry_id):
 
 
 @app.route('/get_response', methods=['POST'])
-@require_auth
+@login_required
 def get_response():
     return data.get_response(request.json)
 
 
 @ app.route("/past_entries/<entry_id>")
-@ require_auth
+@login_required
 def past_entries(entry_id):
     entry = orm.get_entry(entry_id)
     if 'private' not in entry:
@@ -154,7 +142,7 @@ def past_entries(entry_id):
     return render_template('journal-entry.html', entry=entry)
 
 @ app.route("/admin/<entry_id>")
-@ require_auth
+@login_required
 def admin(entry_id):
     # make available only for the admin
     if session['user']['user_id']!=admin_user_id:
@@ -173,7 +161,7 @@ def get_static_file(folder, filename):
 
 
 @app.route('/analyze/<analysis_type>/<entry_id>')
-@require_auth
+@login_required
 def analyze(entry_id, analysis_type):
     """
     return a json like {'text':'......'}
@@ -182,7 +170,7 @@ def analyze(entry_id, analysis_type):
 
 
 @app.route('/entry-done/<entry_id>')
-@require_auth
+@login_required
 def entry_done(entry_id):
     """
     run analyziz and change the completed field in the entry doc
@@ -195,7 +183,7 @@ def entry_done(entry_id):
     return {'success':True}
 
 @app.route('/email_content',  methods=['POST'])
-@require_auth
+@login_required
 def email_content():
     try:
         payload = request.get_json()
@@ -211,7 +199,7 @@ def email_content():
 
 
 @app.route('/entry-title', methods=['POST'])
-@ require_auth
+@login_required
 def update_entry_title():
     entry_title = request.json['title']
     entry_id = request.json['entry_id']
@@ -220,7 +208,7 @@ def update_entry_title():
 
 
 @app.route('/delete-entry/<entry_id>', methods=['DELETE'])
-@ require_auth
+@login_required
 def delte_entry(entry_id):
     orm.delete_entry(entry_id)
     return {'success':True}
@@ -228,7 +216,7 @@ def delte_entry(entry_id):
 
 
 @app.route('/change-to-in-progress', methods=['POST'])
-@ require_auth
+@login_required
 def change_to_in_progress():
     entry_id = request.json['entry_id']
     orm.update_entry(entry_id, {'completed':False})
@@ -236,7 +224,7 @@ def change_to_in_progress():
 
 
 @ app.route("/update-privacy", methods=['POST'])
-@ require_auth
+@login_required
 def update_privacy():
     entry_id = request.json['entry_id']
     private = request.json['private']
@@ -250,7 +238,7 @@ def timestamp_to_local_time(timestamp):
 
 
 @app.route('/chat-feedback', methods=['POST'])
-@require_auth
+@login_required
 def chat_feedback():
     content = request.json['content']
     entry_id = request.json['entry_id']
@@ -276,7 +264,7 @@ def add_comment():
 
 
 @app.route('/public-entry/<entry_id>')
-@require_auth
+@login_required
 def get_public_entry(entry_id):
     entry=data.get_public_entry(entry_id)
     comments = orm.get_comments(entry_id)
@@ -284,7 +272,7 @@ def get_public_entry(entry_id):
 
 
 @app.route('/profile')
-@ require_auth
+@login_required
 def profile():
     user_id = '6464e7ac009a56e46cc4ca4c'
     profile = orm.get_profile(user_id)
