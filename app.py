@@ -211,15 +211,9 @@ def change_to_in_progress():
     orm.update_entry(entry_id, {'completed':False})
     return {'success':True}
 
-
-@ app.route("/update-privacy", methods=['POST'])
-@login_required
-def update_privacy():
-    entry_id = request.json['entry_id']
-    private = request.json['private']
-    orm.update_entry(entry_id, {'private':private})
-    return 'success'
-
+@app.route('/privacy', methods=['GET'])
+def privacy():
+    return render_template('privacy.html')
 
 @app.template_filter('timestamp_to_local_time')
 def timestamp_to_local_time(timestamp):

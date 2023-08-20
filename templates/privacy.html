@@ -5,62 +5,97 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gagali</title>
     
-  <link href="{{ url_for('static', filename='img/favicon.png') }}" rel="icon">
-  <link href=" {{ url_for('static', filename='img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+  <link href="{{ url_for('static', filename='favicon.png') }}" rel="icon">
+  <link href=" {{ url_for('static', filename='apple-touch-icon.png') }}" rel="apple-touch-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
   </head>
   <body>
-    <section class="vh-100" style="background-color: #9A616D;">
-      <div class="container py-5 h-100">
-        <div class="row d-flex justify-content-center align-items-center h-100">
-          <div class="col col-xl-10">
-            <div class="card" style="border-radius: 1rem;">
-              <div class="row g-0">
-                <div class="col-md-6 col-lg-5 d-none d-md-block">
-                  <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/img1.webp"
-                    alt="login form" class="img-fluid" style="border-radius: 1rem 0 0 1rem;" />
-                </div>
-                <div class="col-md-6 col-lg-7 d-flex align-items-center">
-                  <div class="card-body p-4 p-lg-5 text-black">
-    
-                    <form method="POST">
-    
-                      <h3 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Create Your Account</h3>
-    
-                      <div class="form-outline mb-4">
-                        <input type="email" id="form2Example17" name="email" class="form-control form-control-lg" placeholder="Email address" required>
-                      </div>
-    
-                      <div class="form-outline mb-4">
-                        <input type="password" id="form2Example27" name='password' class="form-control form-control-lg" placeholder="Password" required>
-                      </div>
-
-                      <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="privacy" required>
-                        <label class="form-check-label" for="exampleCheck1">I agree to <a href="#" style="color: #393f81;">Gagali's Privacy Policy</a></label>
-                      </div>
-                      <div class="form-check">
-                        <input type="checkbox" class="form-check-input" id="terms" required>
-                        <label class="form-check-label" for="exampleCheck1">I agree to <a href="#" style="color: #393f81;">Gagali's Terms of use and BAA</a></label>
-                      </div>
-                      <br>
-                      <p class="error error--hidden text-danger">{{err}}</p>
-                      <div class="pt-1 mb-4">
-                        <button class="btn btn-dark btn-lg btn-block" type="submit">Sign up</button>
-                      </div>
-    
-                      <p class="mb-5 pb-lg-2" style="color: #393f81;">Already have an account? <a href="/login"
-                          style="color: #393f81;">Login here</a></p>
-                      
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div>
+        <h2>Privacy Policy</h2>
+        <h6>Effective: March 1, 2023</h6>
+         
+        <p>
+            
+            Thank you for using Gagali, an interactive journal program. This Privacy Policy outlines how Gagali collects, uses, and protects your personal information when you interact with the program. By using Gagali, you consent to the practices described in this policy.</p>
+            
+            <ol>
+        
+        
+           
+            
+            <li> Information We Collect:
+                <ul>
+            <li>
+               User Account Information: When you create an account on Gagali, we collect your username and email address. This information is necessary to provide you with access to the program's features and to communicate important updates or notifications.
+            </li>
+             
+            <li>
+                User Writings: Gagali is designed to facilitate journaling and personal writing experiences. Your writings and content are processed by OpenAI, a language model developed by OpenAI. Please note that your writings may be transmitted to and stored by OpenAI for the purpose of generating responses and improving the model's performance. However, Gagali will not retain or store your writings beyond what is necessary for the interactive session.
+            </li>
+            </ul>
+            </li>
+            <li>
+            
+            Use of Personal Information:
+            <ul>
+                <li>
+               User Account Information: We use your username and email address to provide you with access to Gagali and to communicate with you regarding your account. We may also use this information to send you important updates, notifications, and service-related announcements.
+                    </li>
+             
+            <li>
+               User Writings: Gagali ensures the confidentiality of your writings. We do not access, view, or use your writings for any purposes other than providing the interactive journaling experience. We take measures to prevent unauthorized access to your writings and ensure their security.
+            </li>
+            </ul>
+            </li>
+            <li>
+            Sharing of Personal Information:
+            <ul>
+                <li> Third-Party Vendors: Gagali will never sell or share your personal data, including your username, email address, and writings, with third-party vendors, marketers, or advertisers.
+                </li>
+                <li>
+                OpenAI: As mentioned earlier, your writings are processed by OpenAI, which is developed and maintained by OpenAI. OpenAI's use of your writings is governed by its own privacy policy. We encourage you to review OpenAI's privacy policy to understand how they handle your data.
+                </li>
+            </ul>
+        
+            </li>
+            <li>
+            
+            Data Security:
+            
+               Gagali takes the security of your personal information seriously. We implement industry-standard security measures to protect your data from unauthorized access, disclosure, alteration, or destruction. However, please be aware that no method of data transmission or storage is completely secure, and we cannot guarantee absolute security.
+            
+             
+            </li>
+            <li>
+            Children's Privacy:
+            
+               Gagali is intended for users who are 18 years of age or older. We do not knowingly collect personal information from individuals under the age of 18. If we become aware that we have collected personal information from a child without parental consent, we will take steps to delete that information.
+            
+            </li>
+            <li>
+            
+            Changes to the Privacy Policy:
+            
+               Gagali may update this Privacy Policy from time to time. Any changes will be posted on this page with a revised "Effective Date." We encourage you to review this Privacy Policy periodically to stay informed about how we handle your personal information.
+            
+            </li>
+            <li>
+            
+            Contact Us:
+            
+               If you have any questions, concerns, or requests regarding this Privacy Policy or the use of your personal information, please contact us at gagali.help@gmail.com. We will endeavor to respond to your inquiry as soon as possible.
+            
+            </li>
+            </ol> 
+            <p>By using Gagali, you acknowledge that you have read and understood this Privacy Policy and agree to the collection, use, and protection of your personal information as described herein.</p>
+            
+             
+            
+            <p>If you have any questions, concerns, or requests regarding this Privacy Policy or the privacy practices of Gagali, please contact us at gagali.help@gmail.com.</p>
+        
+        
+        
         </div>
-      </div>
-    </section>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
   </body>
 </html>
