@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>GAGALI</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+
+  <!-- Favicons -->
+
+  <link href="{{ url_for('static', filename='img/favicon.png') }}" rel="icon">
+  <link href=" {{ url_for('static', filename='img/apple-touch-icon.png') }}" rel="apple-touch-icon">
+
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+
+  <link href="{{ url_for('static', filename='vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='vendor/boxicons/css/boxicons.min.css') }}" rel="stylesheet">
+  <link href=" {{ url_for('static', filename='vendor/glightbox/css/glightbox.min.css') }}" rel="stylesheet">
+  <link href="{{ url_for('static', filename='vendor/swiper/swiper-bundle.min.css') }}" rel="stylesheet">
+
+  <!-- Template Main CSS File -->
+
+  <link href="{{ url_for('static', filename='styles_landing.css') }}" rel="stylesheet">
+
+</head>
+
+<body>
+
+  <!-- ======= Header ======= -->
+  <header id="header" class="fixed-top">
+    <div class="container d-flex align-items-center justify-content-between">
+
+      <h1 class="logo"><a href="/">GAGALI</a></h1>
+      <!-- Uncomment below if you prefer to use an image logo -->
+      <!-- <a href="index.html" class="logo"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+
+      <nav id="navbar" class="navbar">
+        <ul>
+          <li><a class="nav-link scrollto " href="#hero">Home</a></li>
+          <li><a class="nav-link scrollto" href="#how-it-works">How it works</a></li>
+          <li><a class="nav-link scrollto" href="#team">Team</a></li>
+          <!--<li><a class="nav-link scrollto" href="/providers">For Providers </a></li>-->
+          <li><a class="getstarted scrollto" href="/signup">Get Started</a></li>
+        </ul>
+        <i class="bi bi-list mobile-nav-toggle"></i>
+      </nav><!-- .navbar -->
+
+    </div>
+  </header><!-- End Header -->
+
+  <section id="hero" class="d-flex align-items-center">
+
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-6 pt-5 pt-lg-0 order-2 order-lg-1 d-flex flex-column justify-content-center">
+          <h1>Interactive Journal</h1>
+          <h2>Your Always Available, Judgement-Free Companion in Therapy</h2>
+          <div class="d-flex">
+            <a href="/signup" class="btn-get-started scrollto">Get Started</a>
+            <a href="https://youtu.be/1e054vmQe1U" class="glightbox btn-watch-video"><i
+                class="bi bi-play-circle"></i><span>Watch Video</span></a>
+          </div>
+        </div>
+        <div class="col-lg-5 order-2 d-flex justify-content-center align-items-center p-3">
+            <img src="{{ url_for('static', filename='img/screen-capture-user.gif') }}" ></img>
+        </div>
+      </div>
+    </div>
+
+  </section><!-- End Hero -->
+  <main id="main">
+    <!-- ======= Featured Services Section ======= -->
+    <section id="featured-services" class="featured-services">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-4 col-md-6">
+            <div class="icon-box">
+              <div class="icon"><i class="bi bi-laptop"></i></div>
+              <h4 class="title">Engaged writing</h4>
+              <p class="description">Journaling is no longer a solo experience. AI helps you through self discovery and self reflection.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 mt-4 mt-md-0">
+            <div class="icon-box">
+              <div class="icon"><i class="bi bi-card-checklist"></i></div>
+              <h4 class="title">Therapy continuity</h4>
+              <p class="description">Your therapy is no longer a once-in-a-while experience. It is a daily habit.</p>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 mt-4 mt-lg-0">
+            <div class="icon-box">
+              <div class="icon"><i class="bi bi-clipboard-data"></i></div>
+              <h4 class="title">Deeper insights</h4>
+              <p class="description">Always available companion, free of judgement. Let your therapist know you better.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End Featured Services Section -->
+    <!-- ======= HOw it works Section ======= -->
+    <section id="how-it-works" class="about">
+      <div class="container">
+
+        <div class="row">
+          <div class="col-lg-6">
+            <h3>How it works</h3>
+          </div>
+          <div class="col-lg-6 pt-4 pt-lg-0 content">
+
+            <p class="fst-italic">
+              Powered by AI, Gagali engages with you in an interactive journal to ensure therapy continuity between sessions. Without the fear of judgement, express your true self and pave the  way for a more effective therapy.
+            </p>
+            <ul>
+              <li><i class="bi bi-check-circle"></i> During sessions, Gagali listens, transcribes and writes medical
+                notes</li>
+              <li><i class="bi bi-check-circle"></i> Between sessions, Gagali engages with patient in interactive
+                journals to ensure continuty of care</li>
+              <li><i class="bi bi-check-circle"></i> Therapist has access to the patient's entries along with summaries
+                and insights.</li>
+            </ul>
+
+          </div>
+        </div>
+
+      </div>
+    </section><!-- End How it works Section -->
+
+    <!-- ======= Team Section ======= -->
+    <section id="team" class="team">
+      <div class="container">
+
+        <div class="row">
+          <div>
+            <h3 class="mb-5">Team</h3>
+          </div>
+          <p>Gagali was founded by Dr. Ying Wang and Amir Mohajerani. <a href="https://buckspsychiatry.org/">Ying</a> is a board certified psychiatrist and <a href="https://www.linkedin.com/in/amir-mohajerani-00848659/">Amir</a> Amir is a software engineer and leads the development.</p>
+
+            <p>We believe in creating a world where mental health care is seamless, connected, and user-centric. Join us in this journey because mental health matters</p>
+
+        </div>
+
+      </div>
+    </section><!-- End Team Section -->
+    <!-- ======= Cta Section ======= -->
+    <section id="cta" class="cta">
+      <div class="container">
+
+        <div class="text-center">
+          <h3>Ready for better therapy outcomes?</h3>
+          <p> </p>
+          <a class="cta-btn" href="/signup">Start</a>
+        </div>
+
+      </div>
+    </section><!-- End Cta Section -->
+  </main><!-- End #main -->
+
+  <!-- ======= Footer ======= -->
+  <div class="container">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+      <div class="col-md-4">
+
+        <p class="mb-3 mb-md-0 text-body-secondary">help.gagali@gmail.com</p>
+        <p class="mb-3 mb-md-0 text-body-secondary">215-932-4488</p>
+        <p class="mb-3 mb-md-0 text-body-secondary">Langhorne, PA 19047</p>
+      </div>
+
+      <ul class="nav col-md-4 justify-content-end list-unstyled d-flex">
+        <li class="ms-3"><a href="https://www.facebook.com/profile.php?id=100093661045117"><i
+              class="bi bi-facebook"></i></a></li>
+      </ul>
+
+    </footer>
+  </div><!-- End Footer -->
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
+
+  <!-- Vendor JS Files -->
+  <script src="{{ url_for('static', filename='vendor/purecounter/purecounter_vanilla.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/glightbox/js/glightbox.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='vendor/swiper/swiper-bundle.min.js') }}"></script>
+  <script src="a {{ url_for('static', filename='vendor/php-email-form/validate.js') }}"></script>
+  <!-- Template Main JS File -->
+  <script src="{{ url_for('static', filename='landing.js') }}"></script>
+
+
+</body>
+
+</html>

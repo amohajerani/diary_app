@@ -83,7 +83,7 @@ def forgot_password():
 @app.route("/")
 def home():
     if not session.get('user', None):
-        return redirect('https://thegagali.com')
+        return render_template('landing.html')
     user_id = session['user']['user_id']
     in_progress_entries , completed_entries = orm.get_entries(
         user_id=user_id)
