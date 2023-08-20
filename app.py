@@ -99,17 +99,6 @@ def public_entries():
 
 
 
-@app.route("/register_user")
-@login_required
-def register_user():
-    try:
-        data.register_user(session['user']['user_id'])
-        return redirect("/")
-    except:
-        return 'please try again'
-
-
-
 
 @app.route('/chat/', defaults={'entry_id': 'new'}, methods=['GET'])
 @app.route("/chat/<entry_id>")

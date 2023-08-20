@@ -86,21 +86,6 @@ max_chat_tokens = 200
 max_analysis_tokens = 350
 
 
-def get_user_id(email):
-    '''
-    return 
-    - user_id for given email address. 
-    - true or false for signing terms and conditions
-
-    '''
-    user = orm.Users.find_one({'email': email})
-    if user:
-        return str(user['_id']), user.get('terms_conditions', False)
-    user = orm.Users.insert_one(
-        {'email': email})
-    return str(user.inserted_id), False
-
-
 def get_response(req_data):
     '''
     Send the user's input to GPT and return the response.
@@ -444,13 +429,6 @@ def send_email(entry, email):
         print("Email sent! Message ID:"),
         print(response['MessageId'])
 
-
-def register_user(user_id):
-    try:
-        orm.Users.update_one({'_id': ObjectId(user_id)}, {'$set': {'terms_conditions': True}}
-                             )
-    except Exception as e:
-        logger.exception('register terms error')
 
 def close_entry(entry_id):
     orm.update_entry(entry_id, {'completed':1})
