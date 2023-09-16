@@ -10,6 +10,8 @@ import datetime
 from logger import logger
 from functools import wraps
 import base64
+from bson.objectid import ObjectId
+
 
 
 ENV_FILE = find_dotenv()
@@ -77,8 +79,25 @@ def forgot_password():
     if request.method == 'GET':
         return render_template('forgot-password.html')
     email = request.form.get('email')
-    data.reset_password(email)
-    return render_template('forgot-password.html', err='You will receive an email with instructions to reset your password.')
+    data.send_reset_password(email)
+    return render_template('forgot-password-confirmation.html')
+
+
+@app.route('/set_new_password/<user_id>/<code>', methods=['GET', 'POST'])
+def set_new_password(user_id, code):
+    """
+    When user receives an email and clicks on the link, the user is directed here to set a new pwd.
+    """
+    user = orm.Auth.find_one({'_id':ObjectId(user_id)})
+    if not user or not user.get('recovery_code') or str(user.get('recovery_code'))!=str(code):
+        return "this url is expired or otherwise invalid . If you had requested to reset password, please do so again."
+    if request.method == 'GET':
+        return render_template('password_recovery.html')
+    if request.method == 'POST':
+        password = request.form.get('password')
+        email=orm.set_new_password(user_id, password)
+        start_session({'email': email, 'user_id': user_id})
+        return redirect('/')
 
 @app.route("/")
 def home():

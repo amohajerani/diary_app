@@ -258,3 +258,15 @@ def signup(email, password):
     # add user to the provider's collection
     _id = Users.insert_one({'email':email})
     return str(_id)
+
+def set_new_password(user_id, password):
+    user = Auth.find_one({'_id':ObjectId(user_id)})
+    if not user:
+        return None
+
+    pwd_bytes = password.encode('utf-8')
+    salt = bcrypt.gensalt()
+    hash = bcrypt.hashpw(pwd_bytes, salt)
+    Auth.update_one({'_id':ObjectId(user_id)}, {'$set': {'password':hash, 'last_updated':int(time.time()), 'recovery_code':''}})
+
+    return user['email']

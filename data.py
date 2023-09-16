@@ -17,6 +17,9 @@ from botocore.exceptions import ClientError
 from logger import logger
 import time
 import re
+import random
+import boto3
+from botocore.exceptions import ClientError
 
 ENV_FILE = find_dotenv()
 if ENV_FILE:
@@ -26,7 +29,8 @@ if ENV_FILE:
 
 SENDER_EMAIL = env.get("SMTP_USERNAME")
 AWS_REGION = "us-east-1"
-
+AWS_SECRET_ACCESS_KEY = env.get("AWS_SECRET_ACCESS_KEY")
+AWS_ACCESS_KEY = env.get("AWS_ACCESS_KEY")
 
 def init_app():
     app = Flask(__name__)
@@ -461,3 +465,53 @@ def get_summary_note(txt):
     except Exception as e:
         logger.exception('actions error')
         return ''
+    
+def send_reset_password(email):
+    # pick a random 6 digit number
+    user = orm.Auth.find_one({'email':email})
+    if not user:
+        print("Ignore the request. Email does not exist.")
+        return
+    print("Email exists.")
+    user_id = str(user['_id'])
+    code = str(random.randint(100000, 999999))
+    orm.Auth.update_one({'_id':ObjectId(user_id)}, {'$set':{'recovery_code': code}})
+    recovery_url = f"https://thegagali.com/set_new_password/{user_id}/{code}"
+    send_recovery_email(email, recovery_url)
+
+def send_recovery_email(email, recovery_url):
+    aws_client = boto3.client('ses', region_name=AWS_REGION, 
+                              aws_access_key_id = AWS_ACCESS_KEY,
+                              aws_secret_access_key = AWS_SECRET_ACCESS_KEY)
+    BODY_TEXT = f"If you requested to reset you Gagali's password, folllow this link: {recovery_url}"
+    try:
+        # Provide the contents of the email.
+        response = aws_client.send_email(
+            Destination={
+                'ToAddresses': [
+                    email,
+                ],
+            },
+            Message={
+                'Body': {
+                    'Text': {
+                        'Charset': "UTF-8",
+                        'Data': BODY_TEXT,
+                    },
+                },
+                'Subject': {
+                    'Charset': "UTF-8",
+                    'Data': f'Instructions to reset your Gagali password',
+                },
+            },
+            Source=SENDER_EMAIL,
+            # If you are not using a configuration set, comment or delete the
+            # following line
+            # ConfigurationSetName=CONFIGURATION_SET,
+        )
+    # Display an error if something goes wrong.
+    except ClientError as e:
+        logger.exception('email error')
+    else:
+        print("Email sent! Message ID:"),
+        print(response['MessageId'])
